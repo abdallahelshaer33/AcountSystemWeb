@@ -15,10 +15,10 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 });
 
 // connection string
-var sql = builder.Configuration.GetConnectionString("conn");
+var connectionString  = builder.Configuration.GetConnectionString("DefaultConnection") ?? Environment.GetEnvironmentVariable("DEFAULT_CONNECTION");
 var jwtsetting = builder.Configuration.GetSection("JWT");
 // Add services to the container.
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(sql));
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
 //builder.Services.AddDbContext<TafteshDbContext>(op => op.UseSqlServer(sql));
 builder.Services.AddCors();
